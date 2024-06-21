@@ -20,7 +20,7 @@ To test the token, you can use the following URL by replacing `YOUR_TOKEN`:
 ### 2. Project Structure
 
 ```
-git clone ...
+git clone [...](https://github.com/kayademirs/kafka_api_ingestion.git)
 cd kafka_api_ingestion
 ```
 
