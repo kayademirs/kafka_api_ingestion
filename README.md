@@ -20,7 +20,7 @@ To test the token, you can use the following URL by replacing `YOUR_TOKEN`:
 ### 2. Project Structure
 
 ```
-git clone [...](https://github.com/kayademirs/kafka_api_ingestion.git)
+git clone [https://github.com/kayademirs/kafka_api_ingestion.git](https://github.com/kayademirs/kafka_api_ingestion.git)
 cd kafka_api_ingestion
 ```
 
@@ -50,6 +50,7 @@ Connect to the MySQL container and create the `news_data` table:
 1. Connect to the MySQL container:
 
    ```bash
+   docker-compose up -d mysql
    docker exec -it mysql bash
    ```
 
