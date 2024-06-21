@@ -1,0 +1,61 @@
+version: "3.8"
+
+networks:
+  kafka:
+    name: kafka
+    driver: overlay
+    attachable: true
+
+services:
+  kafka:
+    container_name: kafka
+    image: "kayademirseda/kafka:1.0"
+    ports:
+      - "9092:9092"
+      - "9091:9091"
+    networks:
+      - kafka
+    volumes:
+      - ./etc/config/server.properties:/kafka/config/server.properties
+
+  mysql:
+    restart: always
+    image: mysql:8.0.31
+    container_name: mysql
+    networks:
+      - kafka
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=kafka
+      - MYSQL_USER=kafka
+      - MYSQL_PASSWORD=kafka
+      - MYSQL_ROOT_PASSWORD=kafka
+      - MYSQL_ROOT_HOST="%"
+
+  producer:
+    container_name: producer
+    build:
+      context: .
+      dockerfile: ./app/producer/Dockerfile
+    depends_on:
+      - kafka
+    environment:
+      - NEWS_API_KEY=YOUR_TOKEN
+    networks:
+      - kafka
+
+  consumer:
+    container_name: consumer
+    build:
+      context: .
+      dockerfile: ./app/consumer/Dockerfile
+    depends_on:
+      - kafka
+      - mysql
+    networks:
+      - kafka
+
+volumes:
+  kafka:
+  mysql:
